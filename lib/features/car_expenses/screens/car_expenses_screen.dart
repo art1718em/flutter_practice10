@@ -101,20 +101,10 @@ class CarExpensesScreen extends StatelessWidget {
                 return Scaffold(
           appBar: AppBar(
             centerTitle: true,
-            leadingWidth: 100,
-            leading: Row(
-              children: [
-                IconButton(
-                  icon: const Icon(Icons.info_outline),
-                  tooltip: 'Информация',
-                  onPressed: () => context.pushReplacement('/info'),
-                ),
-                IconButton(
-                  icon: const Icon(Icons.history),
-                  tooltip: 'История',
-                  onPressed: () => context.pushReplacement('/history'),
-                ),
-              ],
+            leading: IconButton(
+              icon: const Icon(Icons.history),
+              tooltip: 'История',
+              onPressed: () => context.pushReplacement('/history'),
             ),
             actions: [
               IconButton(

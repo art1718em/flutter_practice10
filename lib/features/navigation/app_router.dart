@@ -14,7 +14,6 @@ import 'package:flutter_practice10/features/service_history/screens/service_hist
 import 'package:flutter_practice10/features/settings/screens/settings_screen.dart';
 import 'package:flutter_practice10/features/tips/screens/tip_detail_screen.dart';
 import 'package:flutter_practice10/features/tips/screens/tips_screen.dart';
-import 'package:flutter_practice10/features/vehicle_info/screens/vehicle_info_screen.dart';
 import 'package:flutter_practice10/features/vehicles/screens/add_vehicle_screen.dart';
 import 'package:flutter_practice10/features/vehicles/screens/edit_vehicle_screen.dart';
 import 'package:flutter_practice10/features/vehicles/screens/vehicle_details_screen.dart';
@@ -120,10 +119,6 @@ final router = GoRouter(
     GoRoute(
       path: '/settings',
       builder: (context, state) => const SettingsScreen(),
-    ),
-    GoRoute(
-      path: '/info',
-      builder: (context, state) => const VehicleInfoScreen(),
     ),
     GoRoute(
         path: '/history',
