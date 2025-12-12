@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter_practice10/features/vehicles/logic/vehicles_cubit.dart';
 import '../logic/car_expenses_cubit.dart';
 
 class AddExpenseScreen extends StatefulWidget {
@@ -27,9 +28,16 @@ class _AddExpenseScreenState extends State<AddExpenseScreen> {
 
   void _saveForm() {
     if (_formKey.currentState!.validate()) {
+      final activeVehicle = context.read<VehiclesCubit>().state.activeVehicle;
+      if (activeVehicle == null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Нет активного автомобиля')),
+        );
+        return;
+      }
       final title = _titleController.text;
       final amount = double.tryParse(_amountController.text) ?? 0.0;
-      context.read<CarExpensesCubit>().addExpense(title, amount);
+      context.read<CarExpensesCubit>().addExpense(activeVehicle.id, title, amount);
       context.pop();
     }
   }

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter_practice10/features/vehicles/logic/vehicles_cubit.dart';
+import 'package:flutter_practice10/features/vehicles/logic/vehicles_state.dart';
 import '../logic/car_expenses_cubit.dart';
 import '../logic/car_expenses_state.dart';
 import '../widgets/expense_table.dart';
@@ -13,8 +15,55 @@ class CarExpensesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<CarExpensesCubit, CarExpensesState>(
-      listener: (context, state) {
+    return BlocBuilder<VehiclesCubit, VehiclesState>(
+      builder: (context, vehiclesState) {
+        final activeVehicle = vehiclesState.activeVehicle;
+
+        if (activeVehicle == null) {
+          return Scaffold(
+            appBar: AppBar(
+              title: const Text('Расходы'),
+              centerTitle: true,
+            ),
+            body: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.directions_car_outlined,
+                    size: 100,
+                    color: Colors.grey[400],
+                  ),
+                  const SizedBox(height: 16),
+                  Text(
+                    'Нет активного автомобиля',
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.grey[600],
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    'Добавьте автомобиль для учета расходов',
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.grey[500],
+                    ),
+                  ),
+                  const SizedBox(height: 24),
+                  ElevatedButton.icon(
+                    onPressed: () => context.push('/vehicles'),
+                    icon: const Icon(Icons.add),
+                    label: const Text('Добавить автомобиль'),
+                  ),
+                ],
+              ),
+            ),
+          );
+        }
+
+        return BlocConsumer<CarExpensesCubit, CarExpensesState>(
+          listener: (context, state) {
         if (state.recentlyRemovedExpense != null) {
           ScaffoldMessenger.of(context).clearSnackBars();
           ScaffoldMessenger.of(context)
@@ -38,11 +87,11 @@ class CarExpensesScreen extends StatelessWidget {
           });
         }
       },
-      builder: (context, state) {
-        final expenses = state.expenses;
-        final totalAmount = state.totalAmount;
+          builder: (context, state) {
+            final expenses = state.getExpensesByVehicle(activeVehicle.id);
+            final totalAmount = state.getTotalAmount(activeVehicle.id);
 
-        return Scaffold(
+            return Scaffold(
           appBar: AppBar(
             centerTitle: true,
             leadingWidth: 100,
@@ -62,25 +111,27 @@ class CarExpensesScreen extends StatelessWidget {
             ),
             actions: [
               IconButton(
+                icon: const Icon(Icons.directions_car),
+                tooltip: 'Автомобили',
+                onPressed: () => context.push('/vehicles'),
+              ),
+              IconButton(
                 icon: const Icon(Icons.person),
                 tooltip: 'Профиль',
                 onPressed: () => context.push('/profile'),
               ),
             ],
-            title: Row(
+            title: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                CachedNetworkImage(
-                  imageUrl:
-                      "https://cdn-icons-png.flaticon.com/512/2921/2921222.png",
-                  width: 30,
-                  height: 30,
-                  placeholder: (context, url) =>
-                      const CircularProgressIndicator(),
-                  errorWidget: (context, url, error) => const Icon(Icons.error),
+                Text(
+                  '${activeVehicle.brand} ${activeVehicle.model}',
+                  style: const TextStyle(fontSize: 14),
                 ),
-                const SizedBox(width: 8),
-                Text('Расходы: ${totalAmount.toStringAsFixed(2)} руб.'),
+                Text(
+                  'Расходы: ${totalAmount.toStringAsFixed(2)} руб.',
+                  style: const TextStyle(fontSize: 12),
+                ),
               ],
             ),
           ),
@@ -89,10 +140,12 @@ class CarExpensesScreen extends StatelessWidget {
             onRemove: (id) =>
                 context.read<CarExpensesCubit>().removeExpense(id),
           ),
-          floatingActionButton: FloatingActionButton(
-            onPressed: () => context.push('/expenses/add'),
-            child: const Icon(Icons.add),
-          ),
+              floatingActionButton: FloatingActionButton(
+                onPressed: () => context.push('/expenses/add'),
+                child: const Icon(Icons.add),
+              ),
+            );
+          },
         );
       },
     );

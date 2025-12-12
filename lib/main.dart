@@ -5,6 +5,7 @@ import 'package:flutter_practice10/features/car_expenses/logic/car_expenses_cubi
 import 'package:flutter_practice10/features/navigation/app_router.dart';
 import 'package:flutter_practice10/features/profile/logic/profile_cubit.dart';
 import 'package:flutter_practice10/features/service_history/logic/service_history_cubit.dart';
+import 'package:flutter_practice10/features/vehicles/logic/vehicles_cubit.dart';
 import 'package:flutter_practice10/shared/app_theme.dart';
 
 void main() {
@@ -20,6 +21,7 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(create: (context) => AuthCubit()),
         BlocProvider(create: (context) => ProfileCubit()),
+        BlocProvider(create: (context) => VehiclesCubit()),
         BlocProvider(create: (context) => CarExpensesCubit()),
         BlocProvider(create: (context) => ServiceHistoryCubit()),
       ],

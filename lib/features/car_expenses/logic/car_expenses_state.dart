@@ -12,8 +12,17 @@ class CarExpensesState extends Equatable {
     this.recentlyRemovedExpenseIndex,
   });
 
-  double get totalAmount =>
-      expenses.fold(0.0, (sum, item) => sum + item.amount);
+  double getTotalAmount(String? vehicleId) {
+    if (vehicleId == null) return 0.0;
+    return expenses
+        .where((e) => e.vehicleId == vehicleId)
+        .fold(0.0, (sum, item) => sum + item.amount);
+  }
+
+  List<ExpenseModel> getExpensesByVehicle(String? vehicleId) {
+    if (vehicleId == null) return [];
+    return expenses.where((e) => e.vehicleId == vehicleId).toList();
+  }
 
   CarExpensesState copyWith({
     List<ExpenseModel>? expenses,

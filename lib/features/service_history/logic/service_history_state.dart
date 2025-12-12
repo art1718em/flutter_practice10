@@ -8,6 +8,11 @@ class ServiceHistoryState extends Equatable {
     this.serviceRecords = const [],
   });
 
+  List<ServiceRecordModel> getRecordsByVehicle(String? vehicleId) {
+    if (vehicleId == null) return [];
+    return serviceRecords.where((r) => r.vehicleId == vehicleId).toList();
+  }
+
   ServiceHistoryState copyWith({
     List<ServiceRecordModel>? serviceRecords,
   }) {

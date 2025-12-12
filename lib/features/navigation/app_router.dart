@@ -8,6 +8,10 @@ import 'package:flutter_practice10/features/profile/screens/profile_screen.dart'
 import 'package:flutter_practice10/features/service_history/screens/add_service_record_screen.dart';
 import 'package:flutter_practice10/features/service_history/screens/service_history_screen.dart';
 import 'package:flutter_practice10/features/vehicle_info/screens/vehicle_info_screen.dart';
+import 'package:flutter_practice10/features/vehicles/screens/add_vehicle_screen.dart';
+import 'package:flutter_practice10/features/vehicles/screens/edit_vehicle_screen.dart';
+import 'package:flutter_practice10/features/vehicles/screens/vehicle_details_screen.dart';
+import 'package:flutter_practice10/features/vehicles/screens/vehicles_screen.dart';
 import 'package:go_router/go_router.dart';
 
 final router = GoRouter(
@@ -28,6 +32,30 @@ final router = GoRouter(
         GoRoute(
           path: 'edit',
           builder: (context, state) => const EditProfileScreen(),
+        ),
+      ],
+    ),
+    GoRoute(
+      path: '/vehicles',
+      builder: (context, state) => const VehiclesScreen(),
+      routes: <RouteBase>[
+        GoRoute(
+          path: 'add',
+          builder: (context, state) => const AddVehicleScreen(),
+        ),
+        GoRoute(
+          path: 'edit/:id',
+          builder: (context, state) {
+            final id = state.pathParameters['id']!;
+            return EditVehicleScreen(vehicleId: id);
+          },
+        ),
+        GoRoute(
+          path: 'details/:id',
+          builder: (context, state) {
+            final id = state.pathParameters['id']!;
+            return VehicleDetailsScreen(vehicleId: id);
+          },
         ),
       ],
     ),

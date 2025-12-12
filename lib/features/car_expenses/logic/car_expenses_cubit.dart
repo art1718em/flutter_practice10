@@ -8,9 +8,10 @@ class CarExpensesCubit extends Cubit<CarExpensesState> {
 
   final _uuid = const Uuid();
 
-  void addExpense(String title, double amount) {
+  void addExpense(String vehicleId, String title, double amount) {
     final newExpense = ExpenseModel(
       id: _uuid.v4(),
+      vehicleId: vehicleId,
       title: title,
       amount: amount,
       date: DateTime.now(),
@@ -52,6 +53,10 @@ class CarExpensesCubit extends Cubit<CarExpensesState> {
 
   void clearUndoState() {
     emit(state.copyWith(clearRecentlyRemoved: true));
+  }
+
+  void clearExpenses() {
+    emit(const CarExpensesState());
   }
 }
 
