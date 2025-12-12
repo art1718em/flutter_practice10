@@ -51,46 +51,11 @@ class SettingsScreen extends StatelessWidget {
                 onTap: () => _showDistanceDialog(context, settings.distanceUnit),
               ),
               const Divider(),
-              const _SectionHeader(title: 'Уведомления'),
-              SwitchListTile(
-                secondary: const Icon(Icons.notifications),
-                title: const Text('Уведомления'),
-                subtitle: const Text('Напоминания о ТО, страховке и т.д.'),
-                value: settings.notificationsEnabled,
-                onChanged: (value) {
-                  context.read<SettingsCubit>().toggleNotifications(value);
-                },
-              ),
-              const Divider(),
-              const _SectionHeader(title: 'Резервное копирование'),
-              SwitchListTile(
-                secondary: const Icon(Icons.backup),
-                title: const Text('Автоматическое резервное копирование'),
-                subtitle: const Text('Сохранение данных в облако'),
-                value: settings.autoBackup,
-                onChanged: (value) {
-                  context.read<SettingsCubit>().toggleAutoBackup(value);
-                },
-              ),
-              const Divider(),
               const _SectionHeader(title: 'О приложении'),
               ListTile(
                 leading: const Icon(Icons.info_outline),
                 title: const Text('Версия приложения'),
                 subtitle: const Text('1.0.0'),
-              ),
-              const Divider(),
-              ListTile(
-                leading: const Icon(Icons.privacy_tip_outlined),
-                title: const Text('Политика конфиденциальности'),
-                trailing: const Icon(Icons.chevron_right),
-                onTap: () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Политика конфиденциальности'),
-                    ),
-                  );
-                },
               ),
               const Divider(),
               Padding(
