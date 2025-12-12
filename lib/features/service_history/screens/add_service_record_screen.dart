@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_practice10/features/service_history/logic/service_history_cubit.dart';
+import 'package:flutter_practice10/features/settings/logic/settings_cubit.dart';
+import 'package:flutter_practice10/features/settings/logic/settings_state.dart';
 import 'package:flutter_practice10/features/vehicles/logic/vehicles_cubit.dart';
+import 'package:flutter_practice10/shared/utils/format_helpers.dart';
 import 'package:go_router/go_router.dart';
 
 class AddServiceRecordScreen extends StatefulWidget {
@@ -35,73 +38,78 @@ class _AddServiceRecordScreenState extends State<AddServiceRecordScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () => context.pop(),
-        ),
-        title: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            CachedNetworkImage(
-              imageUrl: "https://cdn-icons-png.flaticon.com/512/189/189715.png",
-              width: 30,
-              height: 30,
+    return BlocBuilder<SettingsCubit, SettingsState>(
+      builder: (context, settingsState) {
+        final currency = settingsState.settings.currency;
+
+        return Scaffold(
+          appBar: AppBar(
+            centerTitle: true,
+            leading: IconButton(
+              icon: const Icon(Icons.arrow_back),
+              onPressed: () => context.pop(),
             ),
-            const SizedBox(width: 8),
-            const Text('Добавить запись о ТО'),
-          ],
-        ),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              TextFormField(
-                controller: _titleController,
-                decoration: const InputDecoration(
-                  labelText: 'Название',
-                  border: OutlineInputBorder(),
+            title: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                CachedNetworkImage(
+                  imageUrl: "https://cdn-icons-png.flaticon.com/512/189/189715.png",
+                  width: 30,
+                  height: 30,
                 ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Пожалуйста введите название';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 16),
-              TextFormField(
-                controller: _costController,
-                decoration: const InputDecoration(
-                  labelText: 'Стоимость',
-                  border: OutlineInputBorder(),
-                ),
-                keyboardType: TextInputType.number,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Пожалуйста введите стоимость';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 24),
-              Center(
-                child: ElevatedButton(
-                  onPressed: _saveForm,
-                  child: const Text('Сохранить'),
-                ),
-              ),
-            ],
+                const SizedBox(width: 8),
+                const Text('Добавить запись о ТО'),
+              ],
+            ),
           ),
-        ),
-      ),
+          body: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  TextFormField(
+                    controller: _titleController,
+                    decoration: const InputDecoration(
+                      labelText: 'Название',
+                      border: OutlineInputBorder(),
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Пожалуйста введите название';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 16),
+                  TextFormField(
+                    controller: _costController,
+                    decoration: InputDecoration(
+                      labelText: 'Стоимость (${FormatHelpers.getCurrencyLabel(currency)})',
+                      border: const OutlineInputBorder(),
+                    ),
+                    keyboardType: TextInputType.number,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Пожалуйста введите стоимость';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 24),
+                  Center(
+                    child: ElevatedButton(
+                      onPressed: _saveForm,
+                      child: const Text('Сохранить'),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 }
-

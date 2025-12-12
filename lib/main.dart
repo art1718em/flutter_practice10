@@ -6,6 +6,9 @@ import 'package:flutter_practice10/features/favorite_places/logic/favorite_place
 import 'package:flutter_practice10/features/navigation/app_router.dart';
 import 'package:flutter_practice10/features/profile/logic/profile_cubit.dart';
 import 'package:flutter_practice10/features/service_history/logic/service_history_cubit.dart';
+import 'package:flutter_practice10/features/settings/logic/settings_cubit.dart';
+import 'package:flutter_practice10/features/settings/logic/settings_state.dart';
+import 'package:flutter_practice10/features/settings/models/app_settings_model.dart';
 import 'package:flutter_practice10/features/tips/logic/tips_cubit.dart';
 import 'package:flutter_practice10/features/vehicles/logic/vehicles_cubit.dart';
 import 'package:flutter_practice10/shared/app_theme.dart';
@@ -28,13 +31,33 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => ServiceHistoryCubit()),
         BlocProvider(create: (context) => TipsCubit()),
         BlocProvider(create: (context) => FavoritePlacesCubit()),
+        BlocProvider(create: (context) => SettingsCubit()),
       ],
-      child: MaterialApp.router(
-        title: 'Автомобильный помощник',
-        theme: AppTheme.lightTheme,
-        routerConfig: router,
-        debugShowCheckedModeBanner: false,
+      child: BlocBuilder<SettingsCubit, SettingsState>(
+        builder: (context, settingsState) {
+          final themeMode = settingsState.settings.themeMode;
+          
+          return MaterialApp.router(
+            title: 'Автомобильный помощник',
+            theme: AppTheme.lightTheme,
+            darkTheme: AppTheme.darkTheme,
+            themeMode: _getFlutterThemeMode(themeMode),
+            routerConfig: router,
+            debugShowCheckedModeBanner: false,
+          );
+        },
       ),
     );
+  }
+
+  ThemeMode _getFlutterThemeMode(AppThemeMode mode) {
+    switch (mode) {
+      case AppThemeMode.light:
+        return ThemeMode.light;
+      case AppThemeMode.dark:
+        return ThemeMode.dark;
+      case AppThemeMode.system:
+        return ThemeMode.system;
+    }
   }
 }

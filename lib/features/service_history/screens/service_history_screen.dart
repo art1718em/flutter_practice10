@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_practice10/features/service_history/logic/service_history_cubit.dart';
 import 'package:flutter_practice10/features/service_history/logic/service_history_state.dart';
+import 'package:flutter_practice10/features/settings/logic/settings_cubit.dart';
+import 'package:flutter_practice10/features/settings/logic/settings_state.dart';
 import 'package:flutter_practice10/features/vehicles/logic/vehicles_cubit.dart';
 import 'package:flutter_practice10/features/vehicles/logic/vehicles_state.dart';
+import 'package:flutter_practice10/shared/utils/format_helpers.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
@@ -65,24 +68,32 @@ class ServiceHistoryScreen extends StatelessWidget {
                     ],
                   ),
                 )
-              : BlocBuilder<ServiceHistoryCubit, ServiceHistoryState>(
-                  builder: (context, state) {
-                    final records = state.getRecordsByVehicle(activeVehicle.id);
-                    
-                    if (records.isEmpty) {
-                      return const Center(
-                        child: Text('История обслуживания пуста'),
-                      );
-                    }
+              : BlocBuilder<SettingsCubit, SettingsState>(
+                  builder: (context, settingsState) {
+                    final currency = settingsState.settings.currency;
 
-                    return ListView.builder(
-                      itemCount: records.length,
-                      itemBuilder: (context, index) {
-                        final record = records[index];
-                        return ListTile(
-                          title: Text(record.title),
-                          subtitle: Text(DateFormat('dd.MM.yyyy').format(record.date)),
-                          trailing: Text('${record.cost.toStringAsFixed(2)} руб.'),
+                    return BlocBuilder<ServiceHistoryCubit, ServiceHistoryState>(
+                      builder: (context, state) {
+                        final records = state.getRecordsByVehicle(activeVehicle.id);
+                        
+                        if (records.isEmpty) {
+                          return const Center(
+                            child: Text('История обслуживания пуста'),
+                          );
+                        }
+
+                        return ListView.builder(
+                          itemCount: records.length,
+                          itemBuilder: (context, index) {
+                            final record = records[index];
+                            return ListTile(
+                              title: Text(record.title),
+                              subtitle: Text(DateFormat('dd.MM.yyyy').format(record.date)),
+                              trailing: Text(
+                                FormatHelpers.formatCurrency(record.cost, currency),
+                              ),
+                            );
+                          },
                         );
                       },
                     );

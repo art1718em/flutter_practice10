@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter_practice10/features/settings/logic/settings_cubit.dart';
+import 'package:flutter_practice10/features/settings/logic/settings_state.dart';
 import 'package:flutter_practice10/features/vehicles/logic/vehicles_cubit.dart';
 import 'package:flutter_practice10/features/vehicles/logic/vehicles_state.dart';
+import 'package:flutter_practice10/shared/utils/format_helpers.dart';
 
 class VehiclesScreen extends StatelessWidget {
   const VehiclesScreen({super.key});
@@ -18,8 +21,12 @@ class VehiclesScreen extends StatelessWidget {
           onPressed: () => context.go('/expenses'),
         ),
       ),
-      body: BlocBuilder<VehiclesCubit, VehiclesState>(
-        builder: (context, state) {
+      body: BlocBuilder<SettingsCubit, SettingsState>(
+        builder: (context, settingsState) {
+          final distanceUnit = settingsState.settings.distanceUnit;
+
+          return BlocBuilder<VehiclesCubit, VehiclesState>(
+            builder: (context, state) {
           if (state.vehicles.isEmpty) {
             return Center(
               child: Column(
@@ -82,10 +89,12 @@ class VehiclesScreen extends StatelessWidget {
                     children: [
                       const SizedBox(height: 4),
                       Text('Год: ${vehicle.year}'),
-                      if (vehicle.licensePlate != null)
-                        Text('Номер: ${vehicle.licensePlate}'),
-                      if (vehicle.mileage != null)
-                        Text('Пробег: ${vehicle.mileage} км'),
+                        if (vehicle.licensePlate != null)
+                          Text('Номер: ${vehicle.licensePlate}'),
+                        if (vehicle.mileage != null)
+                          Text(
+                            'Пробег: ${FormatHelpers.formatDistance(vehicle.mileage!, distanceUnit)}',
+                          ),
                       if (vehicle.isActive)
                         Container(
                           margin: const EdgeInsets.only(top: 8),
@@ -155,6 +164,8 @@ class VehiclesScreen extends StatelessWidget {
                   onTap: () => context.push('/vehicles/details/${vehicle.id}'),
                 ),
               );
+            },
+          );
             },
           );
         },

@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_practice10/features/settings/models/app_settings_model.dart';
+import 'package:flutter_practice10/shared/utils/format_helpers.dart';
 import '../models/expense_model.dart';
 
 class ExpenseRow extends StatelessWidget {
   final ExpenseModel expense;
+  final Currency currency;
   final ValueChanged<String>? onRemove;
 
   const ExpenseRow({
     super.key,
     required this.expense,
+    required this.currency,
     this.onRemove,
   });
 
@@ -23,7 +27,7 @@ class ExpenseRow extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Text(
-            '${expense.amount.toStringAsFixed(2)} руб.',
+            FormatHelpers.formatCurrency(expense.amount, currency),
             style: const TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 16,

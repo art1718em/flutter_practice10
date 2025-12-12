@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_practice10/features/settings/logic/settings_cubit.dart';
+import 'package:flutter_practice10/features/settings/logic/settings_state.dart';
 import 'package:flutter_practice10/features/vehicles/logic/vehicles_cubit.dart';
 import 'package:flutter_practice10/features/vehicles/logic/vehicles_state.dart';
+import 'package:flutter_practice10/shared/utils/format_helpers.dart';
 
 class VehicleDetailsScreen extends StatelessWidget {
   final String vehicleId;
@@ -15,14 +18,18 @@ class VehicleDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<VehiclesCubit, VehiclesState>(
-      builder: (context, state) {
-        final vehicle = state.vehicles.firstWhere(
-          (v) => v.id == vehicleId,
-          orElse: () => state.vehicles.first,
-        );
+    return BlocBuilder<SettingsCubit, SettingsState>(
+      builder: (context, settingsState) {
+        final distanceUnit = settingsState.settings.distanceUnit;
 
-        return Scaffold(
+        return BlocBuilder<VehiclesCubit, VehiclesState>(
+          builder: (context, state) {
+            final vehicle = state.vehicles.firstWhere(
+              (v) => v.id == vehicleId,
+              orElse: () => state.vehicles.first,
+            );
+
+            return Scaffold(
           appBar: AppBar(
             title: const Text('Детали автомобиля'),
             leading: IconButton(
@@ -132,7 +139,7 @@ class VehicleDetailsScreen extends StatelessWidget {
                     leading: const Icon(Icons.speed),
                     title: const Text('Пробег'),
                     trailing: Text(
-                      '${vehicle.mileage} км',
+                      FormatHelpers.formatDistance(vehicle.mileage!, distanceUnit),
                       style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
@@ -158,6 +165,8 @@ class VehicleDetailsScreen extends StatelessWidget {
               ],
             ),
           ),
+            );
+          },
         );
       },
     );

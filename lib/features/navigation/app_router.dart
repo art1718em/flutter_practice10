@@ -11,6 +11,7 @@ import 'package:flutter_practice10/features/profile/screens/edit_profile_screen.
 import 'package:flutter_practice10/features/profile/screens/profile_screen.dart';
 import 'package:flutter_practice10/features/service_history/screens/add_service_record_screen.dart';
 import 'package:flutter_practice10/features/service_history/screens/service_history_screen.dart';
+import 'package:flutter_practice10/features/settings/screens/settings_screen.dart';
 import 'package:flutter_practice10/features/tips/screens/tip_detail_screen.dart';
 import 'package:flutter_practice10/features/tips/screens/tips_screen.dart';
 import 'package:flutter_practice10/features/vehicle_info/screens/vehicle_info_screen.dart';
@@ -115,6 +116,10 @@ final router = GoRouter(
           },
         ),
       ],
+    ),
+    GoRoute(
+      path: '/settings',
+      builder: (context, state) => const SettingsScreen(),
     ),
     GoRoute(
       path: '/info',

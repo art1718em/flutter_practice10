@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter_practice10/features/settings/models/app_settings_model.dart';
 import '../models/expense_model.dart';
 import 'expense_row.dart';
 
 class ExpenseTable extends StatelessWidget {
   final List<ExpenseModel> expenses;
+  final Currency currency;
   final ValueChanged<String>? onRemove;
 
   const ExpenseTable({
     super.key,
     required this.expenses,
+    required this.currency,
     this.onRemove,
   });
 
@@ -42,6 +45,7 @@ class ExpenseTable extends StatelessWidget {
         return ExpenseRow(
           key: ValueKey(expense.id),
           expense: expense,
+          currency: currency,
           onRemove: onRemove != null ? (id) => onRemove!(id) : null,
         );
       },

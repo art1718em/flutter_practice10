@@ -85,6 +85,13 @@ class ProfileScreen extends StatelessWidget {
                 const SizedBox(height: 32),
                 const Divider(),
                 ListTile(
+                  leading: const Icon(Icons.settings),
+                  title: const Text('Настройки'),
+                  trailing: const Icon(Icons.chevron_right),
+                  onTap: () => context.push('/settings'),
+                ),
+                const Divider(),
+                ListTile(
                   leading: const Icon(Icons.phone),
                   title: const Text('Телефон'),
                   subtitle: Text(profile.phone ?? 'Не указан'),
