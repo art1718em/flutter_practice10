@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_practice10/features/auth/screens/login_screen.dart';
+import 'package:flutter_practice10/features/auth/screens/register_screen.dart';
 import 'package:flutter_practice10/features/car_expenses/screens/add_expense_screen.dart';
 import 'package:flutter_practice10/features/car_expenses/screens/car_expenses_screen.dart';
 import 'package:flutter_practice10/features/service_history/screens/add_service_record_screen.dart';
@@ -7,8 +9,16 @@ import 'package:flutter_practice10/features/vehicle_info/screens/vehicle_info_sc
 import 'package:go_router/go_router.dart';
 
 final router = GoRouter(
-  initialLocation: '/expenses',
+  initialLocation: '/auth/login',
   routes: <RouteBase>[
+    GoRoute(
+      path: '/auth/login',
+      builder: (context, state) => const LoginScreen(),
+    ),
+    GoRoute(
+      path: '/auth/register',
+      builder: (context, state) => const RegisterScreen(),
+    ),
     GoRoute(
       path: '/expenses',
       builder: (BuildContext context, GoRouterState state) {

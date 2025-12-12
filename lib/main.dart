@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_practice10/features/auth/logic/auth_cubit.dart';
 import 'package:flutter_practice10/features/car_expenses/logic/car_expenses_cubit.dart';
 import 'package:flutter_practice10/features/navigation/app_router.dart';
 import 'package:flutter_practice10/features/service_history/logic/service_history_cubit.dart';
@@ -16,11 +17,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        BlocProvider(create: (context) => AuthCubit()),
         BlocProvider(create: (context) => CarExpensesCubit()),
         BlocProvider(create: (context) => ServiceHistoryCubit()),
       ],
       child: MaterialApp.router(
-        title: 'Flutter Demo',
+        title: 'Автомобильный помощник',
         theme: AppTheme.lightTheme,
         routerConfig: router,
       ),
