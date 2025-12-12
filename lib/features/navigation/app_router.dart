@@ -3,6 +3,8 @@ import 'package:flutter_practice10/features/auth/screens/login_screen.dart';
 import 'package:flutter_practice10/features/auth/screens/register_screen.dart';
 import 'package:flutter_practice10/features/car_expenses/screens/add_expense_screen.dart';
 import 'package:flutter_practice10/features/car_expenses/screens/car_expenses_screen.dart';
+import 'package:flutter_practice10/features/profile/screens/edit_profile_screen.dart';
+import 'package:flutter_practice10/features/profile/screens/profile_screen.dart';
 import 'package:flutter_practice10/features/service_history/screens/add_service_record_screen.dart';
 import 'package:flutter_practice10/features/service_history/screens/service_history_screen.dart';
 import 'package:flutter_practice10/features/vehicle_info/screens/vehicle_info_screen.dart';
@@ -18,6 +20,16 @@ final router = GoRouter(
     GoRoute(
       path: '/auth/register',
       builder: (context, state) => const RegisterScreen(),
+    ),
+    GoRoute(
+      path: '/profile',
+      builder: (context, state) => const ProfileScreen(),
+      routes: <RouteBase>[
+        GoRoute(
+          path: 'edit',
+          builder: (context, state) => const EditProfileScreen(),
+        ),
+      ],
     ),
     GoRoute(
       path: '/expenses',

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter_practice10/features/profile/logic/profile_cubit.dart';
 import '../logic/auth_cubit.dart';
 import '../logic/auth_state.dart';
 
@@ -36,9 +37,14 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocConsumer<AuthCubit, AuthState>(
+      body:       BlocConsumer<AuthCubit, AuthState>(
         listener: (context, state) {
-          if (state.status == AuthStatus.authenticated) {
+          if (state.status == AuthStatus.authenticated && state.user != null) {
+            context.read<ProfileCubit>().loadProfile(
+              state.user!.id,
+              state.user!.name,
+              state.user!.email,
+            );
             context.go('/expenses');
           } else if (state.status == AuthStatus.error) {
             ScaffoldMessenger.of(context).showSnackBar(

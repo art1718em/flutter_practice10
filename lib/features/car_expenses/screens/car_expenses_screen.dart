@@ -60,6 +60,13 @@ class CarExpensesScreen extends StatelessWidget {
                 ),
               ],
             ),
+            actions: [
+              IconButton(
+                icon: const Icon(Icons.person),
+                tooltip: 'Профиль',
+                onPressed: () => context.push('/profile'),
+              ),
+            ],
             title: Row(
               mainAxisSize: MainAxisSize.min,
               children: [

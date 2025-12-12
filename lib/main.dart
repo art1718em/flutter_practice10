@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_practice10/features/auth/logic/auth_cubit.dart';
 import 'package:flutter_practice10/features/car_expenses/logic/car_expenses_cubit.dart';
 import 'package:flutter_practice10/features/navigation/app_router.dart';
+import 'package:flutter_practice10/features/profile/logic/profile_cubit.dart';
 import 'package:flutter_practice10/features/service_history/logic/service_history_cubit.dart';
 import 'package:flutter_practice10/shared/app_theme.dart';
 
@@ -18,6 +19,7 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => AuthCubit()),
+        BlocProvider(create: (context) => ProfileCubit()),
         BlocProvider(create: (context) => CarExpensesCubit()),
         BlocProvider(create: (context) => ServiceHistoryCubit()),
       ],
@@ -25,6 +27,7 @@ class MyApp extends StatelessWidget {
         title: 'Автомобильный помощник',
         theme: AppTheme.lightTheme,
         routerConfig: router,
+        debugShowCheckedModeBanner: false,
       ),
     );
   }
