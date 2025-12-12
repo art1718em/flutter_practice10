@@ -3,6 +3,10 @@ import 'package:flutter_practice10/features/auth/screens/login_screen.dart';
 import 'package:flutter_practice10/features/auth/screens/register_screen.dart';
 import 'package:flutter_practice10/features/car_expenses/screens/add_expense_screen.dart';
 import 'package:flutter_practice10/features/car_expenses/screens/car_expenses_screen.dart';
+import 'package:flutter_practice10/features/favorite_places/screens/add_place_screen.dart';
+import 'package:flutter_practice10/features/favorite_places/screens/edit_place_screen.dart';
+import 'package:flutter_practice10/features/favorite_places/screens/favorite_places_screen.dart';
+import 'package:flutter_practice10/features/favorite_places/screens/place_details_screen.dart';
 import 'package:flutter_practice10/features/profile/screens/edit_profile_screen.dart';
 import 'package:flutter_practice10/features/profile/screens/profile_screen.dart';
 import 'package:flutter_practice10/features/service_history/screens/add_service_record_screen.dart';
@@ -84,6 +88,30 @@ final router = GoRouter(
           builder: (context, state) {
             final id = state.pathParameters['id']!;
             return TipDetailScreen(tipId: id);
+          },
+        ),
+      ],
+    ),
+    GoRoute(
+      path: '/places',
+      builder: (context, state) => const FavoritePlacesScreen(),
+      routes: <RouteBase>[
+        GoRoute(
+          path: 'add',
+          builder: (context, state) => const AddPlaceScreen(),
+        ),
+        GoRoute(
+          path: 'edit/:id',
+          builder: (context, state) {
+            final id = state.pathParameters['id']!;
+            return EditPlaceScreen(placeId: id);
+          },
+        ),
+        GoRoute(
+          path: 'details/:id',
+          builder: (context, state) {
+            final id = state.pathParameters['id']!;
+            return PlaceDetailsScreen(placeId: id);
           },
         ),
       ],

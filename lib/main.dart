@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_practice10/features/auth/logic/auth_cubit.dart';
 import 'package:flutter_practice10/features/car_expenses/logic/car_expenses_cubit.dart';
+import 'package:flutter_practice10/features/favorite_places/logic/favorite_places_cubit.dart';
 import 'package:flutter_practice10/features/navigation/app_router.dart';
 import 'package:flutter_practice10/features/profile/logic/profile_cubit.dart';
 import 'package:flutter_practice10/features/service_history/logic/service_history_cubit.dart';
@@ -26,6 +27,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => CarExpensesCubit()),
         BlocProvider(create: (context) => ServiceHistoryCubit()),
         BlocProvider(create: (context) => TipsCubit()),
+        BlocProvider(create: (context) => FavoritePlacesCubit()),
       ],
       child: MaterialApp.router(
         title: 'Автомобильный помощник',

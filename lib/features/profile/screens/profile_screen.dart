@@ -5,6 +5,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_practice10/features/auth/logic/auth_cubit.dart';
 import 'package:flutter_practice10/features/auth/logic/auth_state.dart';
 import 'package:flutter_practice10/features/car_expenses/logic/car_expenses_cubit.dart';
+import 'package:flutter_practice10/features/favorite_places/logic/favorite_places_cubit.dart';
 import 'package:flutter_practice10/features/profile/logic/profile_cubit.dart';
 import 'package:flutter_practice10/features/profile/logic/profile_state.dart';
 import 'package:flutter_practice10/features/service_history/logic/service_history_cubit.dart';
@@ -46,6 +47,7 @@ class ProfileScreen extends StatelessWidget {
                   context.read<VehiclesCubit>().clearVehicles();
                   context.read<CarExpensesCubit>().clearExpenses();
                   context.read<ServiceHistoryCubit>().clearServiceHistory();
+                  context.read<FavoritePlacesCubit>().clearPlaces();
                   context.go('/auth/login');
                 },
               ),
