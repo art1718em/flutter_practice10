@@ -7,6 +7,8 @@ import 'package:flutter_practice10/features/profile/screens/edit_profile_screen.
 import 'package:flutter_practice10/features/profile/screens/profile_screen.dart';
 import 'package:flutter_practice10/features/service_history/screens/add_service_record_screen.dart';
 import 'package:flutter_practice10/features/service_history/screens/service_history_screen.dart';
+import 'package:flutter_practice10/features/tips/screens/tip_detail_screen.dart';
+import 'package:flutter_practice10/features/tips/screens/tips_screen.dart';
 import 'package:flutter_practice10/features/vehicle_info/screens/vehicle_info_screen.dart';
 import 'package:flutter_practice10/features/vehicles/screens/add_vehicle_screen.dart';
 import 'package:flutter_practice10/features/vehicles/screens/edit_vehicle_screen.dart';
@@ -69,6 +71,19 @@ final router = GoRouter(
           path: 'add',
           builder: (BuildContext context, GoRouterState state) {
             return const AddExpenseScreen();
+          },
+        ),
+      ],
+    ),
+    GoRoute(
+      path: '/tips',
+      builder: (context, state) => const TipsScreen(),
+      routes: <RouteBase>[
+        GoRoute(
+          path: ':id',
+          builder: (context, state) {
+            final id = state.pathParameters['id']!;
+            return TipDetailScreen(tipId: id);
           },
         ),
       ],

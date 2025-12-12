@@ -111,6 +111,11 @@ class CarExpensesScreen extends StatelessWidget {
             ),
             actions: [
               IconButton(
+                icon: const Icon(Icons.lightbulb_outline),
+                tooltip: 'Советы',
+                onPressed: () => context.push('/tips'),
+              ),
+              IconButton(
                 icon: const Icon(Icons.directions_car),
                 tooltip: 'Автомобили',
                 onPressed: () => context.push('/vehicles'),
