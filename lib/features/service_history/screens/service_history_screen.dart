@@ -23,7 +23,7 @@ class ServiceHistoryScreen extends StatelessWidget {
           appBar: AppBar(
             leading: IconButton(
               icon: const Icon(Icons.arrow_back),
-              onPressed: () => context.pushReplacement('/expenses'),
+              onPressed: () => context.go('/'),
             ),
             title: activeVehicle != null
                 ? Column(

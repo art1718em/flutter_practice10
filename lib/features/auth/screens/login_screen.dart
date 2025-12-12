@@ -45,7 +45,7 @@ class _LoginScreenState extends State<LoginScreen> {
               state.user!.name,
               state.user!.email,
             );
-            context.go('/expenses');
+            context.go('/');
           } else if (state.status == AuthStatus.error) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(

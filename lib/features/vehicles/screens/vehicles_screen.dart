@@ -18,7 +18,7 @@ class VehiclesScreen extends StatelessWidget {
         centerTitle: true,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
-          onPressed: () => context.go('/expenses'),
+          onPressed: () => context.go('/'),
         ),
       ),
       body: BlocBuilder<SettingsCubit, SettingsState>(

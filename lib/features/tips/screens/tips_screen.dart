@@ -15,10 +15,6 @@ class TipsScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Советы автовладельцам'),
         centerTitle: true,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () => context.go('/expenses'),
-        ),
       ),
       body: BlocBuilder<TipsCubit, TipsState>(
         builder: (context, state) {

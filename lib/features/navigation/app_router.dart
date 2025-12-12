@@ -2,18 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_practice10/features/auth/screens/login_screen.dart';
 import 'package:flutter_practice10/features/auth/screens/register_screen.dart';
 import 'package:flutter_practice10/features/car_expenses/screens/add_expense_screen.dart';
-import 'package:flutter_practice10/features/car_expenses/screens/car_expenses_screen.dart';
 import 'package:flutter_practice10/features/favorite_places/screens/add_place_screen.dart';
 import 'package:flutter_practice10/features/favorite_places/screens/edit_place_screen.dart';
-import 'package:flutter_practice10/features/favorite_places/screens/favorite_places_screen.dart';
 import 'package:flutter_practice10/features/favorite_places/screens/place_details_screen.dart';
+import 'package:flutter_practice10/features/navigation/main_screen.dart';
 import 'package:flutter_practice10/features/profile/screens/edit_profile_screen.dart';
-import 'package:flutter_practice10/features/profile/screens/profile_screen.dart';
 import 'package:flutter_practice10/features/service_history/screens/add_service_record_screen.dart';
 import 'package:flutter_practice10/features/service_history/screens/service_history_screen.dart';
 import 'package:flutter_practice10/features/settings/screens/settings_screen.dart';
 import 'package:flutter_practice10/features/tips/screens/tip_detail_screen.dart';
-import 'package:flutter_practice10/features/tips/screens/tips_screen.dart';
 import 'package:flutter_practice10/features/vehicles/screens/add_vehicle_screen.dart';
 import 'package:flutter_practice10/features/vehicles/screens/edit_vehicle_screen.dart';
 import 'package:flutter_practice10/features/vehicles/screens/vehicle_details_screen.dart';
@@ -32,14 +29,19 @@ final router = GoRouter(
       builder: (context, state) => const RegisterScreen(),
     ),
     GoRoute(
-      path: '/profile',
-      builder: (context, state) => const ProfileScreen(),
-      routes: <RouteBase>[
-        GoRoute(
-          path: 'edit',
-          builder: (context, state) => const EditProfileScreen(),
-        ),
-      ],
+      path: '/',
+      builder: (context, state) {
+        final tabParam = state.uri.queryParameters['tab'];
+        int initialIndex = 0;
+        if (tabParam != null) {
+          initialIndex = int.tryParse(tabParam) ?? 0;
+        }
+        return MainScreen(initialIndex: initialIndex);
+      },
+    ),
+    GoRoute(
+      path: '/profile/edit',
+      builder: (context, state) => const EditProfileScreen(),
     ),
     GoRoute(
       path: '/vehicles',
@@ -66,73 +68,54 @@ final router = GoRouter(
       ],
     ),
     GoRoute(
-      path: '/expenses',
+      path: '/expenses/add',
       builder: (BuildContext context, GoRouterState state) {
-        return const CarExpensesScreen();
+        return const AddExpenseScreen();
       },
-      routes: <RouteBase>[
-        GoRoute(
-          path: 'add',
-          builder: (BuildContext context, GoRouterState state) {
-            return const AddExpenseScreen();
-          },
-        ),
-      ],
     ),
     GoRoute(
-      path: '/tips',
-      builder: (context, state) => const TipsScreen(),
-      routes: <RouteBase>[
-        GoRoute(
-          path: ':id',
-          builder: (context, state) {
-            final id = state.pathParameters['id']!;
-            return TipDetailScreen(tipId: id);
-          },
-        ),
-      ],
+      path: '/tips/:id',
+      builder: (context, state) {
+        final id = state.pathParameters['id']!;
+        return TipDetailScreen(tipId: id);
+      },
     ),
     GoRoute(
-      path: '/places',
-      builder: (context, state) => const FavoritePlacesScreen(),
-      routes: <RouteBase>[
-        GoRoute(
-          path: 'add',
-          builder: (context, state) => const AddPlaceScreen(),
-        ),
-        GoRoute(
-          path: 'edit/:id',
-          builder: (context, state) {
-            final id = state.pathParameters['id']!;
-            return EditPlaceScreen(placeId: id);
-          },
-        ),
-        GoRoute(
-          path: 'details/:id',
-          builder: (context, state) {
-            final id = state.pathParameters['id']!;
-            return PlaceDetailsScreen(placeId: id);
-          },
-        ),
-      ],
+      path: '/places/add',
+      builder: (context, state) => const AddPlaceScreen(),
+    ),
+    GoRoute(
+      path: '/places/edit/:id',
+      builder: (context, state) {
+        final id = state.pathParameters['id']!;
+        return EditPlaceScreen(placeId: id);
+      },
+    ),
+    GoRoute(
+      path: '/places/details/:id',
+      builder: (context, state) {
+        final id = state.pathParameters['id']!;
+        return PlaceDetailsScreen(placeId: id);
+      },
     ),
     GoRoute(
       path: '/settings',
       builder: (context, state) => const SettingsScreen(),
     ),
     GoRoute(
-        path: '/history',
-        builder: (BuildContext context, GoRouterState state) {
-          return const ServiceHistoryScreen();
-        },
-        routes: [
-          GoRoute(
-            path: 'add',
-            builder: (BuildContext context, GoRouterState state) {
-              return const AddServiceRecordScreen();
-            },
-          ),
-        ]),
+      path: '/history',
+      builder: (BuildContext context, GoRouterState state) {
+        return const ServiceHistoryScreen();
+      },
+      routes: [
+        GoRoute(
+          path: 'add',
+          builder: (BuildContext context, GoRouterState state) {
+            return const AddServiceRecordScreen();
+          },
+        ),
+      ],
+    ),
   ],
 );
 

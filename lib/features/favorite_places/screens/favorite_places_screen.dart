@@ -15,10 +15,6 @@ class FavoritePlacesScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Избранные места'),
         centerTitle: true,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () => context.go('/expenses'),
-        ),
       ),
       body: BlocBuilder<FavoritePlacesCubit, FavoritePlacesState>(
         builder: (context, state) {

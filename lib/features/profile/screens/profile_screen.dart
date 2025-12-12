@@ -30,17 +30,20 @@ class ProfileScreen extends StatelessWidget {
           appBar: AppBar(
             title: const Text('Профиль'),
             centerTitle: true,
-            leading: IconButton(
-              icon: const Icon(Icons.arrow_back),
-              onPressed: () => context.go('/expenses'),
-            ),
             actions: [
               IconButton(
                 icon: const Icon(Icons.edit),
+                tooltip: 'Редактировать профиль',
                 onPressed: () => context.push('/profile/edit'),
               ),
               IconButton(
+                icon: const Icon(Icons.settings),
+                tooltip: 'Настройки',
+                onPressed: () => context.push('/settings'),
+              ),
+              IconButton(
                 icon: const Icon(Icons.logout),
+                tooltip: 'Выйти',
                 onPressed: () {
                   context.read<AuthCubit>().logout();
                   context.read<ProfileCubit>().clearProfile();
@@ -83,13 +86,6 @@ class ProfileScreen extends StatelessWidget {
                       ),
                 ),
                 const SizedBox(height: 32),
-                const Divider(),
-                ListTile(
-                  leading: const Icon(Icons.settings),
-                  title: const Text('Настройки'),
-                  trailing: const Icon(Icons.chevron_right),
-                  onTap: () => context.push('/settings'),
-                ),
                 const Divider(),
                 ListTile(
                   leading: const Icon(Icons.phone),
